@@ -1,5 +1,5 @@
 import express from 'express';
-import searchRoutes from './routes/searchRoutes.js';
+import { search } from './controllers/searchController.js';
 
 const app = express();
 
@@ -8,7 +8,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api', searchRoutes);
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+// Search route for Agoda API
+app.get('/api/search', search);
 
 // Server listening
 app.listen(3000, () => {
