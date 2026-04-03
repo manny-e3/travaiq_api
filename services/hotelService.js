@@ -1,5 +1,6 @@
 import axios from 'axios';
 import https from 'https';
+import logger from '../utils/logger.js';
 
 const SUGGESTION_HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/91.0.4472.124 Safari/537.36',
@@ -36,13 +37,13 @@ async function getCityId(location) {
             httpsAgent,
         });
 
-        console.log('[getCityId] raw response:', response.data);
+        logger.info(`[getCityId] raw response: ${JSON.stringify(response.data).substring(0, 200)}...`);
 
         const suggestions = response.data;
         if (!Array.isArray(suggestions) || suggestions.length === 0) return null;
         return suggestions[0]?.Value ?? null;
     } catch (error) {
-        console.error('[getCityId] error:', error.message, error.response?.data);
+        logger.error(`[getCityId] error: ${error.message}${error.response?.data ? ' - ' + JSON.stringify(error.response.data) : ''}`);
         return null;
     }
 }
@@ -129,13 +130,13 @@ export async function getHotelRecommendations(location, checkInDate, checkOutDat
 
     const cityId = await getCityId(location);
     if (!cityId) {
-        console.warn(`[hotels] No cityId found for location: ${location}`);
+        logger.warn(`[hotels] No cityId found for location: ${location}`);
         return [];
     }
 
     const rawHotels = await fetchAgodaHotels(cityId, checkInDate, checkOutDate, min, max);
     if (!rawHotels || rawHotels.length === 0) {
-        console.warn(`[hotels] No hotels returned from Agoda for cityId: ${cityId}`);
+        logger.warn(`[hotels] No hotels returned from Agoda for cityId: ${cityId}`);
         return [];
     }
 

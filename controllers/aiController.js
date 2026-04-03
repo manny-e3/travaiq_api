@@ -1,3 +1,4 @@
+import logger from '../utils/logger.js';
 import { callGemini } from '../services/geminiService.js';
 import {
     generateTravelPlanPrompt,
@@ -81,7 +82,7 @@ export async function generatePlan(req, res) {
             });
         }
 
-        console.error('[generatePlan] error:', err.message);
+        logger.error(`[generatePlan] error: ${err.message}`);
         return res.status(500).json({ error: err.message || 'Failed to generate travel plan' });
     }
 }
@@ -102,7 +103,7 @@ export async function getAlternativeActivities(req, res) {
         const alternatives = await callGemini(prompt);
         return res.json({ alternatives });
     } catch (err) {
-        console.error('[getAlternativeActivities] error:', err.message);
+        logger.error(`[getAlternativeActivities] error: ${err.message}`);
         return res.status(500).json({ error: err.message || 'Failed to get alternatives' });
     }
 }
@@ -122,7 +123,7 @@ export async function getAddActivitySuggestions(req, res) {
         const suggestions = await callGemini(prompt);
         return res.json({ suggestions });
     } catch (err) {
-        console.error('[getAddActivitySuggestions] error:', err.message);
+        logger.error(`[getAddActivitySuggestions] error: ${err.message}`);
         return res.status(500).json({ error: err.message || 'Failed to get suggestions' });
     }
 }

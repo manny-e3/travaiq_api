@@ -1,3 +1,4 @@
+import logger from '../utils/logger.js';
 import { getHotelRecommendations } from '../services/hotelService.js';
 
 /**
@@ -16,7 +17,7 @@ export async function getHotels(req, res) {
         const hotels = await getHotelRecommendations(location, checkIn, checkOut, budget || null);
         return res.json({ hotels });
     } catch (err) {
-        console.error('[getHotels] error:', err.message);
+        logger.error(`[getHotels] error: ${err.message}`);
         return res.status(500).json({ error: err.message || 'Failed to fetch hotels' });
     }
 }
@@ -38,7 +39,7 @@ export async function getHotelsPost(req, res) {
         const hotels = await getHotelRecommendations(location, checkIn, checkOut, budget || null);
         return res.json({ hotels });
     } catch (err) {
-        console.error('[getHotelsPost] error:', err.message);
+        logger.error(`[getHotelsPost] error: ${err.message}`);
         return res.status(500).json({ error: err.message || 'Failed to fetch hotels' });
     }
 }

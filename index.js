@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
+import logger from './utils/logger.js';
 import { search } from './controllers/searchController.js';
 import aiRoutes from './routes/aiRoutes.js';
 import hotelRoutes from './routes/hotelRoutes.js';
@@ -31,6 +33,13 @@ app.use(cors()); // Allow all origins (development)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Request logging via Morgan and Winston
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms', {
+  stream: {
+    write: (message) => logger.info(message.trim()),
+  },
+}));
+
 // Routes
 app.get('/', (req, res) => {
   res.send('Travaiq API — running');
@@ -49,5 +58,5 @@ app.use('/api', hotelRoutes);
 // Server listening
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Travaiq API listening on port ${PORT}`);
+  logger.info(`Travaiq API listening on port ${PORT}`);
 });
