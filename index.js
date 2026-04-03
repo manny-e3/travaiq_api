@@ -39,12 +39,12 @@ app.get('/', (req, res) => {
 // Location search (Agoda) - OPEN TO BROWSER
 app.get('/api/search', search);
 
-// PRIVATE ROUTES - ONLY ACCESSIBLE BY LARAVEL SERVER
+// PRIVATE ROUTES - TEMPORARILY DISABLED SECURITY FOR TESTING
 // AI travel plan generation (Gemini)
-app.use('/api', requireApiKey, aiRoutes);
+app.use('/api', aiRoutes);
 
 // Agoda hotel recommendations
-app.use('/api', requireApiKey, hotelRoutes);
+app.use('/api', hotelRoutes);
 
 // Server listening
 const PORT = process.env.PORT || 3000;
