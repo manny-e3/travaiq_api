@@ -14,14 +14,6 @@ export const search = async (req, res) => {
         return res.json([]);
     }
 
-    // Temporary test data to verify frontend works
-    if (term === 'test') {
-        return res.json([
-            { DisplayText: 'Test Location 1' },
-            { DisplayText: 'Test Location 2' },
-            { DisplayText: 'Test Location 3' }
-        ]);
-    }
 
     try {
         const response = await axios.get('https://partners.agoda.com/HotelSuggest/GetSuggestions', {

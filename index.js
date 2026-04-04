@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import logger from './utils/logger.js';
 import { search } from './controllers/searchController.js';
+import { getImageUrl } from './controllers/imageController.js';
 import aiRoutes from './routes/aiRoutes.js';
 import hotelRoutes from './routes/hotelRoutes.js';
 import { requireApiKey } from './middlewares/authMiddleware.js';
@@ -47,6 +48,9 @@ app.get('/', (req, res) => {
 
 // Location search (Agoda) - OPEN TO BROWSER
 app.get('/api/search', search);
+
+// Google Places Image search - OPEN TO BROWSER (used for itinerary thumbnails)
+app.get('/api/place-image', getImageUrl);
 
 // PRIVATE ROUTES - TEMPORARILY DISABLED SECURITY FOR TESTING
 // AI travel plan generation (Gemini)

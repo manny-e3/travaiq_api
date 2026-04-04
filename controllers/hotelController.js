@@ -5,7 +5,7 @@ import { getHotelRecommendations } from '../services/hotelService.js';
  * GET /api/hotels?location=Paris&checkIn=2026-05-01&checkOut=2026-05-05&budget=medium
  */
 export async function getHotels(req, res) {
-    const { location, checkIn, checkOut, budget } = req.query;
+    const { location, checkIn, checkOut, budget, cityId } = req.query;
 
     if (!location || !checkIn || !checkOut) {
         return res.status(422).json({
@@ -14,7 +14,7 @@ export async function getHotels(req, res) {
     }
 
     try {
-        const hotels = await getHotelRecommendations(location, checkIn, checkOut, budget || null);
+        const hotels = await getHotelRecommendations(location, checkIn, checkOut, budget || null, cityId);
         return res.json({ hotels });
     } catch (err) {
         logger.error(`[getHotels] error: ${err.message}`);
@@ -27,7 +27,7 @@ export async function getHotels(req, res) {
  * Body: { location, checkIn, checkOut, budget? }
  */
 export async function getHotelsPost(req, res) {
-    const { location, checkIn, checkOut, budget } = req.body;
+    const { location, checkIn, checkOut, budget, cityId } = req.body;
 
     if (!location || !checkIn || !checkOut) {
         return res.status(422).json({
@@ -36,7 +36,7 @@ export async function getHotelsPost(req, res) {
     }
 
     try {
-        const hotels = await getHotelRecommendations(location, checkIn, checkOut, budget || null);
+        const hotels = await getHotelRecommendations(location, checkIn, checkOut, budget || null, cityId);
         return res.json({ hotels });
     } catch (err) {
         logger.error(`[getHotelsPost] error: ${err.message}`);
