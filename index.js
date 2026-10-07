@@ -62,5 +62,5 @@ app.use('/api', hotelRoutes);
 // Server listening
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  logger.info(`Travaiq API listening on port ${PORT}`);
+  logger.info(`Travaiq ${PORT}`);
 });
