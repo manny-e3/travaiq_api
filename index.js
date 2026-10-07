@@ -43,7 +43,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms', 
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Travaiq API — running');
+  res.send('Travaiq API is running. Use /api/search for location search, /api/place-image for Google Places image search, and /api/ai for AI travel plan generation.');
 });
 
 // Location search (Agoda) - OPEN TO BROWSER
@@ -62,5 +62,5 @@ app.use('/api', hotelRoutes);
 // Server listening
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  logger.info(`Tr ${PORT}`);
+  logger.info(`Travaiq API listening on port ${PORT}`);
 });
